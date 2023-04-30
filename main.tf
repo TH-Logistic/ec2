@@ -10,7 +10,7 @@ data "template_cloudinit_config" "ubuntu_instance_template_file" {
 
   # get common user_data
   part {
-    content      = file("./scripts/ec2-user-data-ubuntu")
+    content      = file("./scripts/ec2-user-data-ubuntu.sh")
   }
 
   # get master user_data
