@@ -3,6 +3,11 @@ variable "vpc_id" {
   type =  string
 }
 
+variable "user_data" {
+  description = "ec2 user data"
+  type = string
+}
+
 variable "internet_gateway_id" {
   description = "internet gateway for instance & vpc to connect to internet"
   type = string

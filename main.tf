@@ -8,7 +8,7 @@ resource "aws_instance" "instance" {
   ami                    = var.instance_ami
   instance_type          = var.instance_type
   key_name               = var.key_pair_name
-  user_data              = file("./scripts/ec2-user-data-ubuntu.sh")
+  user_data              = "${file("./scripts/ec2-user-data-ubuntu")} \n ${var.user_data}"
   vpc_security_group_ids = [aws_security_group.public_security.id]
   subnet_id              = aws_subnet.public_subnet.id
   tags = {
