@@ -4,11 +4,27 @@
 # -> Route_Table_association (1-n table)inside n-n relationship between route table & subnet
 # -> VPC -> Internet gateway
 
+data "template_cloudinit_config" "ubuntu_instance_template_file" {
+  gzip          = true
+  base64_encode = true
+
+  # get common user_data
+  part {
+    content      = file("./scripts/ec2-user-data-ubuntu")
+  }
+
+  # get master user_data
+  part {
+    content      = var.user_data
+  }
+
+}
+
 resource "aws_instance" "instance" {
   ami                    = var.instance_ami
   instance_type          = var.instance_type
   key_name               = var.key_pair_name
-  user_data              = "${file("./scripts/ec2-user-data-ubuntu")} \n ${var.user_data}"
+  user_data              = data.template_cloudinit_config.ubuntu_instance_template_file.rendered
   vpc_security_group_ids = [aws_security_group.public_security.id]
   subnet_id              = aws_subnet.public_subnet.id
   tags = {
