@@ -6,6 +6,7 @@ variable "vpc_id" {
 variable "user_data" {
   description = "ec2 user data"
   type = string
+  default = ""
 }
 
 variable "internet_gateway_id" {
