@@ -8,16 +8,15 @@ data "template_cloudinit_config" "ubuntu_instance_template_file" {
   gzip          = true
   base64_encode = true
 
-  # get common user_data
   part {
+    content_type = "text/x-shellscript"
     content      = file("./scripts/ec2-user-data-ubuntu.sh")
   }
-
   # get master user_data
   part {
+    content_type = "text/x-shellscript"
     content      = var.user_data
   }
-
 }
 
 resource "aws_instance" "instance" {
