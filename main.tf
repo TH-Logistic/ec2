@@ -14,7 +14,7 @@ data "template_cloudinit_config" "ubuntu_instance_template_file" {
   }
   # get master user_data
   part {
-    content_type = "text/x-shellscript"
+    content_type = "text/cloud-config"
     content      = var.user_data
   }
 }
@@ -23,7 +23,8 @@ resource "aws_instance" "instance" {
   ami                    = var.instance_ami
   instance_type          = var.instance_type
   key_name               = var.key_pair_name
-  user_data              = data.template_cloudinit_config.ubuntu_instance_template_file.rendered
+  user_data_base64       = var.user_data_base64
+  user_data              = var.use_user_data_base_64 ? null : data.template_cloudinit_config.ubuntu_instance_template_file.rendered
   vpc_security_group_ids = [aws_security_group.public_security.id]
   subnet_id              = aws_subnet.public_subnet.id
   tags = {
