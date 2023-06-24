@@ -3,7 +3,7 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "use_user_data_base_64" {
+variable "use_user_data_base64" {
   description = "Use user data with base 64 encode"
   type        = bool
   default     = false
